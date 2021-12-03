@@ -2,7 +2,7 @@ using System;
 
 namespace FirstApiCS.Entity
 {
-    public class Product
+    public record Product
     {
         public Guid Id { get; init; }
 

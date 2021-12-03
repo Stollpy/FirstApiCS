@@ -15,9 +15,9 @@ namespace FirstApiCS.Repositories
     {
         private readonly List<Product> products = new()
         {
-            new Product {Id = Guid.NewGuid(), Name = "Learning CS", Price = 9, CreatedAt = DateTimeOffset.UtcNow},
-            new Product {Id = Guid.NewGuid(), Name = "Learning PHP", Price = 9, CreatedAt = DateTimeOffset.UtcNow},
-            new Product {Id = Guid.NewGuid(), Name = "Learning JavaScript", Price = 9, CreatedAt = DateTimeOffset.UtcNow},
+            new Product {Id = Guid.NewGuid(), Name = "Learning CS", Price = 9, Quantity = 10, CreatedAt = DateTimeOffset.UtcNow},
+            new Product {Id = Guid.NewGuid(), Name = "Learning PHP", Price = 9, Quantity = 10, CreatedAt = DateTimeOffset.UtcNow},
+            new Product {Id = Guid.NewGuid(), Name = "Learning JavaScript", Price = 9, Quantity = 10, CreatedAt = DateTimeOffset.UtcNow},
         };
 
         public IEnumerable<Product> GetProducts()

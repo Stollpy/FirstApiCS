@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using FirstApiCS.Dtos;
 using FirstApiCS.Entity;
 using FirstApiCS.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -18,13 +20,13 @@ namespace FirstApiCS.Controllers
         }
         
         [HttpGet]
-        public IEnumerable<Product> GetProducts()
+        public IEnumerable<ProductDto> GetProducts()
         {
-            return productsRepository.GetProducts();
+            return productsRepository.GetProducts().Select(product => product.AsProductDto());
         }
         
         [HttpGet("{id}")]
-        public ActionResult<Product> GetProduct(Guid id)
+        public ActionResult<ProductDto> GetProduct(Guid id)
         {
             var product = productsRepository.GetProduct(id);
             if (product is null)
@@ -32,7 +34,7 @@ namespace FirstApiCS.Controllers
                 return NotFound();
             }
 
-            return product;
+            return product.AsProductDto();
         }
     }
 }
