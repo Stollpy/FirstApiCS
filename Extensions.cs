@@ -1,13 +1,13 @@
-using FirstApiCS.Dtos;
+using FirstApiCS.Dtos.Product;
 using FirstApiCS.Entity;
 
 namespace FirstApiCS
 {
     public static class Extensions
     {
-        public static ProductDto AsProductDto(this Product product)
+        public static ProductOutputDto AsProductDto(this Product product)
         {
-            return new ProductDto()
+            return new ProductOutputDto()
             {
                 Id = product.Id,
                 Name = product.Name,

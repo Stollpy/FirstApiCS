@@ -10,6 +10,12 @@ namespace FirstApiCS.Repositories
     {
         Product GetProduct(Guid id);
         IEnumerable<Product> GetProducts();
+
+        void SetProduct(Product product);
+
+        void UpdateProduct(Product product);
+
+        void DeleteProduct(Guid id);
     }
     public class ProductsRepository : IProductRepository
     {
@@ -23,6 +29,23 @@ namespace FirstApiCS.Repositories
         public IEnumerable<Product> GetProducts()
         {
             return products;
+        }
+
+        public void SetProduct(Product product)
+        {
+            products.Add(product);
+        }
+
+        public void UpdateProduct(Product product)
+        {
+            var index = products.FindIndex(oldProduct => oldProduct.Id == product.Id);
+            products[index] = product;
+        }
+
+        public void DeleteProduct(Guid id)
+        {
+            var index = products.FindIndex(oldProduct => oldProduct.Id == id);
+            products.RemoveAt(index);
         }
 
         public Product? GetProduct(Guid id)
