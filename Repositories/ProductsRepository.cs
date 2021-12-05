@@ -3,22 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using FirstApiCS.Entity;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 
 namespace FirstApiCS.Repositories
 {
-    public interface IProductRepository
-    {
-        Product GetProduct(Guid id);
-        IEnumerable<Product> GetProducts();
 
-        void SetProduct(Product product);
-
-        void UpdateProduct(Product product);
-
-        void DeleteProduct(Guid id);
-    }
     public class ProductsRepository : IProductRepository
     {
+        private const string databaseName = "firstApiCS";
+        private const string collectionName = "products";
+        
+        private readonly IMongoCollection<Product> productCollection;
+        public ProductsRepository(IMongoClient mongoClient)
+        {
+            IMongoDatabase database = mongoClient.GetDatabase(databaseName);
+            productCollection = database.GetCollection<Product>(collectionName);
+
+        }
+        
         private readonly List<Product> products = new()
         {
             new Product {Id = Guid.NewGuid(), Name = "Learning CS", Price = 9, Quantity = 10, CreatedAt = DateTimeOffset.UtcNow},
@@ -33,7 +35,7 @@ namespace FirstApiCS.Repositories
 
         public void SetProduct(Product product)
         {
-            products.Add(product);
+            productCollection.InsertOne(product);
         }
 
         public void UpdateProduct(Product product)
