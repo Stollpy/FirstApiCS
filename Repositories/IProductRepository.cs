@@ -1,20 +1,24 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FirstApiCS.Entity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FirstApiCS.Repositories
 {
     public interface IProductRepository
     {
-        Product GetProduct(Guid id);
-        IEnumerable<Product> GetProducts();
+        Task<Product> GetProductAsync(Guid id);
+        Task<IEnumerable<Product>> GetProductsAsync();
     
-        void SetProduct(Product product);
+        Task SetProductAsync(Product product);
     
-        void UpdateProduct(Product product);
+        Task UpdateProductAsync(Product product);
     
-        void DeleteProduct(Guid id);
-    
+        Task DeleteProductAsync(Guid id);
+
+        Task<Product> GetProductDefaultAsync();
+
     }
 }
 

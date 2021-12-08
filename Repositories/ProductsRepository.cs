@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using FirstApiCS.Dtos.Product;
 using FirstApiCS.Entity;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
@@ -25,32 +27,45 @@ namespace FirstApiCS.Repositories
 
         }
 
-        public IEnumerable<Product> GetProducts()
+        public async Task<IEnumerable<Product>> GetProductsAsync()
         {
-            return productCollection.Find(new BsonDocument()).ToList();
+            return await productCollection.Find(new BsonDocument()).ToListAsync();
         }
 
-        public void SetProduct(Product product)
+        public async Task SetProductAsync(Product product)
         {
-            productCollection.InsertOne(product);
+            await productCollection.InsertOneAsync(product);
         }
 
-        public void UpdateProduct(Product product)
+        public async Task UpdateProductAsync(Product product)
         {
             var filter = filterBuilder.Eq(existingProduct => existingProduct.Id, product.Id);
-            productCollection.ReplaceOne(filter, product);
+            await productCollection.ReplaceOneAsync(filter, product);
         }
 
-        public void DeleteProduct(Guid id)
+        public async Task DeleteProductAsync(Guid id)
         {
             var filter = filterBuilder.Eq(product => product.Id, id);
-            productCollection.DeleteOne(filter);
+            await productCollection.DeleteOneAsync(filter);
         }
 
-        public Product? GetProduct(Guid id)
+        public async Task<Product> GetProductAsync(Guid id)
         {
             var filter = filterBuilder.Eq(product => product.Id, id);
-            return productCollection.Find(filter).SingleOrDefault();
+            return await productCollection.Find(filter).SingleOrDefaultAsync();
+        }
+
+        public async Task<Product> GetProductDefaultAsync()
+        {
+            Product product = new()
+            {
+                Id = Guid.NewGuid(),
+                Price = 10,
+                Quantity = 10,
+                Name = "Learn CSharp and Dotnet",
+                CreatedAt = DateTimeOffset.UtcNow
+            };
+            return await Task.FromResult(product);
         }
     }
 }
