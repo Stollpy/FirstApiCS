@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FirstApiCS.Dtos.Product;
 using FirstApiCS.Entity;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
